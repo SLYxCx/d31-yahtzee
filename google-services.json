@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "191245771222",
+    "project_id": "mobile-login-a419d",
+    "storage_bucket": "mobile-login-a419d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:191245771222:android:cf3c20311a9ad4148bc477",
+        "android_client_info": {
+          "package_name": "com.d31yahtzee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1PyzwKx0owWCpuhsrPRrv9BQtYKgmI5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

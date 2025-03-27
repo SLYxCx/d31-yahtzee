@@ -4,10 +4,8 @@ import  LogIn  from '../components/LogIn'
 export default function Modal() {
     return (
         <View style={styles.container}>
-        
             <LogIn />
         </View>
-        
     );
 }
 

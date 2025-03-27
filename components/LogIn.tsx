@@ -1,13 +1,36 @@
+' use client '
 import React from 'react';
 import {StyleSheet, TextInput, Text, View, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { useUserAuth } from "../_utils/auth-context";
 
 export default function LogIn() {
-    const [text1, onChangeText1] = React.useState('');
-    const [text2, onChangeText2] = React.useState('');
-
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
+    const { user, signUp, logIn, firebaseSignOut } = useUserAuth();
     const router = useRouter();
+
+    const handleSignUp = async () => {
+        try {
+          await signUp(email, password);
+          // User signed up successfully
+        } catch (error) {
+          console.error("Signup error:", error);
+          // Handle signup error
+        }
+      };
+
+      const handleLogIn = async () => {
+        try {
+          await logIn(email, password);
+          // User logged in successfully
+        } catch (error) {
+          console.error("Login error:", error);
+          // Handle login error
+        }
+      };
+
     const signIn = () => {
             router.push("/(play)");
         }
@@ -25,53 +48,35 @@ export default function LogIn() {
     <SafeAreaView>
 
         <View style={styles.section}>
-        <Text style={styles.text}>
-            Sign In
-        </Text>
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText1}
-            value={text1}
-            placeholder='Username'
-        />
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText2}
-            value={text2}
-            placeholder='Password'
-        />
-        <TouchableOpacity 
-            style={styles.button}
-            onPress={signIn}>
-            <View>
-                <Text>Sign In</Text>
-            </View>
-        </TouchableOpacity>
-        </View>
-
-        <View style={styles.section}>
-        <Text style={styles.text}>
-            Create Account
-        </Text>
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText1}
-            value={text1}
-            placeholder='Username'
-        />
-        <TextInput
-            style={styles.input}
-            onChangeText={onChangeText2}
-            value={text2}
-            placeholder='Password'
-        />
-        <TouchableOpacity 
-            style={styles.button}
-            onPress={createAccount}>
-            <View>
-                <Text>Create Account</Text>
-            </View>
-        </TouchableOpacity>
+            <Text style={styles.text}>
+                Sign In
+            </Text>
+            <TextInput
+                style={styles.input}
+                onChangeText={setEmail}
+                value={email}
+                placeholder='Username'
+            />
+            <TextInput
+                style={styles.input}
+                onChangeText={setPassword}
+                value={password}
+                placeholder='Password'
+            />
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={handleLogIn}>
+                <View>
+                    <Text>Login</Text>
+                </View>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                style={styles.button}
+                onPress={handleSignUp}>
+                <View>
+                    <Text>Create Account</Text>
+                </View>
+            </TouchableOpacity>
         </View>
 
         <View>
