@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import { useRouter } from 'expo-router';
+import { useRouter, Link } from 'expo-router';
 import { Image } from "expo-image";
 
 export default function Page() {
@@ -10,7 +10,9 @@ export default function Page() {
   // PLAY BUTTON
   const play = () => {
     //console.log("PLAY");
-    router.push("/(play)");
+    //router.push("/(play)"); // Disabled for Modal Testing
+
+    <Link href="/modal"></Link>
   }
   // OPTIONS BUTTON
   const options = () => {
@@ -34,13 +36,14 @@ export default function Page() {
         <View style={styles.buttonArea}>
 
           {/* PLAY Button */}
-          <TouchableOpacity 
+          <Link href="/modal"
             style={styles.button}
-            onPress={play}>
+            //onPress={play}
+            >
               <View>
                 <Text>PLAY</Text> 
               </View>
-          </TouchableOpacity>
+          </Link>
 
           {/* OPTIONS Button */}
           <TouchableOpacity 
@@ -89,8 +92,7 @@ const styles = StyleSheet.create({
     marginHorizontal: "auto",
     minWidth: "70%",
     minHeight: '10%',
-    justifyContent: "center",
-    alignItems: "center",
+    borderRadius: 5
   },
   // title: {
   //   fontSize: 64,
