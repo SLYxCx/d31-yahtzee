@@ -1,59 +1,59 @@
 import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
-export default function StartScreen() {
+export default function DifficultyScreen() {
 
     const router = useRouter();
 
-    // PLAYER BUTTON
-    const playerGame = () => {
-        //console.log("playerGame");
-        router.push("/(game)");
+    // EASY BUTTON
+    const easyGame = () => {
+        //console.log("easy-Computer");
+        router.push("/(computer)");
     }
 
-    const difficultySelect = () => {
-        //console.log("difficultySelect");
-        router.push("/difficulty");
+    const mediumGame = () => {
+        //console.log("medium-computer");
+        router.push("/(computer)");
     }
 
-    const backHome = () => {
-        //console.log("backHome");
-        router.dismissAll();
+    const hardGame = () => {
+        //console.log("hard-computer");
+        router.push("/(computer)");
     }
 
     return (
     <View style={styles.container}>
 
-        <Text style={styles.title}>SELECT OPPONENT</Text>
+        <Text style={styles.title}>SELECT Difficulty</Text>
         
         {/* BUTTONS */}
         <View style={styles.buttonArea}>
 
-        {/* PLAYER Button */}
+        {/* EASY Button */}
         <TouchableOpacity 
         style={styles.button}
-        onPress={playerGame}>
+        onPress={easyGame}>
             <View>
-                <Text>Versus</Text> 
+                <Text>Easy</Text> 
             </View>
         </TouchableOpacity>
 
-        {/* COMPUTER Button */}
+        {/* MEDIUM Button */}
         <TouchableOpacity 
         style={styles.button}
-        onPress={difficultySelect}>
+        onPress={mediumGame}>
             <View>
-                <Text>Computer</Text>
+                <Text>Medium</Text>
             </View>
         </TouchableOpacity>
         </View>
 
-        {/* BACK Button */}
+        {/* HARD Button */}
         <TouchableOpacity 
         style={styles.button}
-        onPress={backHome}>
+        onPress={hardGame}>
             <View>
-                <Text>Back</Text>
+                <Text>Hard</Text>
             </View>
         </TouchableOpacity>
 
