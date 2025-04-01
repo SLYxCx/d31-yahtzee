@@ -55,8 +55,6 @@ export default function Page() {
           </TouchableOpacity>
 
         </View>
-        
-        {/* <Text style={styles.title}>Hello World</Text> */}
       </View>
     </View>
   );
@@ -94,9 +92,4 @@ const styles = StyleSheet.create({
     minHeight: '10%',
     borderRadius: 5
   },
-  // title: {
-  //   fontSize: 64,
-  //   fontWeight: "bold",
-  //   color: "#922018"
-  // },
 });

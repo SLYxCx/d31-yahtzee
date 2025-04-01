@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
 
 
-export default function PlayLayout() {
+export default function GameLayout() {
     return (
         <Stack
             screenOptions=
@@ -9,10 +9,6 @@ export default function PlayLayout() {
                     headerShown: false,
                 }}>
             <Stack.Screen name="index" />
-            <Stack.Screen name="(game)" />
-            <Stack.Screen name="difficulty" />
-            <Stack.Screen name="(computer)" />
-
         </Stack>
     )
 }

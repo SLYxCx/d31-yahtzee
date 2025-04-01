@@ -2,13 +2,20 @@ import React from 'react';
 import {StyleSheet, TextInput, Text, View, TouchableOpacity} from 'react-native';
 import {SafeAreaView, SafeAreaProvider} from 'react-native-safe-area-context';
 import { useRouter } from 'expo-router';
+import { supabase } from '../lib/supabase';
 
 export default function LogIn() {
-    const [text1, onChangeText1] = React.useState('');
-    const [text2, onChangeText2] = React.useState('');
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
 
     const router = useRouter();
-    const signIn = () => {
+    const signIn = async () => {
+        // const { error } = await supabase.auth.signInWithPassword({ email, password });
+        // if (error) {
+        //     console.log('error')
+        // } else {
+        //     router.push("/(play)")
+        // }
             router.push("/(play)");
         }
 
@@ -30,14 +37,14 @@ export default function LogIn() {
         </Text>
         <TextInput
             style={styles.input}
-            onChangeText={onChangeText1}
-            value={text1}
-            placeholder='Username'
+            value={email}
+            onChangeText={setEmail}
+            placeholder='Email'
         />
         <TextInput
             style={styles.input}
-            onChangeText={onChangeText2}
-            value={text2}
+            value={password}
+            onChangeText={setPassword}
             placeholder='Password'
         />
         <TouchableOpacity 
@@ -55,14 +62,14 @@ export default function LogIn() {
         </Text>
         <TextInput
             style={styles.input}
-            onChangeText={onChangeText1}
-            value={text1}
+            onChangeText={setEmail}
+            value={email}
             placeholder='Username'
         />
         <TextInput
             style={styles.input}
-            onChangeText={onChangeText2}
-            value={text2}
+            onChangeText={setPassword}
+            value={password}
             placeholder='Password'
         />
         <TouchableOpacity 
