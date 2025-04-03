@@ -1,6 +1,6 @@
 // Full StyledGameUI for GameScreen with Working Example Logic and How to Play
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, ScrollView, Image } from 'react-native';
 import Dice from '../../../components/Dice';
 import { Category, UpperCategories, LowerCategories } from '../../../constants/categories';
 import {
@@ -97,29 +97,34 @@ export default function GameScreen() {
       <Text style={styles.turnIndicator}>Turn: Player {isPlayer1 ? '1' : '2'}</Text>
 
       <View style={styles.scoreCard}>
-        <View style={styles.column}>
-          <Text style={styles.title}>MINOR</Text>
-          {UpperCategories.map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              style={[styles.category, currentUsed.has(cat) && styles.used]}
-              onPress={() => handleSelectCategory(cat)}>
-              <Text style={styles.label}>{cat}</Text>
-            </TouchableOpacity>
-          ))}
+  <View style={styles.column}>
+    <Text style={styles.title}>MINOR</Text>
+    {UpperCategories.map((cat) => (
+      <TouchableOpacity
+        key={cat}
+        style={[styles.category, currentUsed.has(cat) && styles.used]}
+        onPress={() => handleSelectCategory(cat)}>
+        <View style={styles.row}>
+          <Image source={require('../../../assets/dice-icon.png')} style={styles.icon} />
+          <Text style={styles.label}>{cat}</Text>
         </View>
-        <View style={styles.column}>
-          <Text style={styles.title}>MAJOR</Text>
-          {LowerCategories.map((cat) => (
-            <TouchableOpacity
-              key={cat}
-              style={[styles.category, currentUsed.has(cat) && styles.used]}
-              onPress={() => handleSelectCategory(cat)}>
-              <Text style={styles.label}>{cat}</Text>
-            </TouchableOpacity>
-          ))}
-        </View>
-      </View>
+      </TouchableOpacity>
+    ))}
+  </View>
+
+  <View style={styles.column}>
+    <Text style={styles.title}>MAJOR</Text>
+    {LowerCategories.map((cat) => (
+      <TouchableOpacity
+        key={cat}
+        style={[styles.category, currentUsed.has(cat) && styles.used]}
+        onPress={() => handleSelectCategory(cat)}>
+        <Text style={styles.label}>{cat}</Text>
+      </TouchableOpacity>
+    ))}
+  </View>
+</View>
+
 
       <View style={styles.diceRow}>
         {rollState.dice.map((die, idx) => (
@@ -134,7 +139,15 @@ export default function GameScreen() {
       </View>
 
       <TouchableOpacity style={styles.rollButton} onPress={handleRoll} disabled={rollState.rollsLeft === 0}>
+        <Image
+                        source={require('../../../assets/dice-icon.png')}
+                        style={styles.dice}
+                      />
         <Text style={styles.rollText}>ROLL</Text>
+        <Image
+                        source={require('../../../assets/dice-icon.png')}
+                        style={styles.dice}
+                      />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -205,9 +218,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginVertical: 20,
-    padding: 10,
+    padding: 12,
     backgroundColor: 'darkgreen',
-    borderRadius: 10,
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    borderWidth: 3,
+    borderColor: 'white',
   },
   column: {
     flex: 1,
@@ -216,27 +232,33 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     color: 'white',
+    fontFamily: 'SawarabiMincho',
     marginBottom: 10,
-    textDecorationLine: 'underline',
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+    paddingBottom: 4,
+    width: '100%',
+    textAlign: 'center',
   },
   category: {
     paddingVertical: 6,
     paddingHorizontal: 12,
     marginVertical: 4,
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: 8,
+    width: 140,
   },
   used: {
     backgroundColor: '#aaa',
   },
   label: {
-    fontWeight: 'bold',
+    fontFamily: 'SawarabiMincho',
+    fontSize: 16,
+    color: '#000',
   },
-  diceRow: {
+  row: {
     flexDirection: 'row',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
-    marginVertical: 10,
+    alignItems: 'center',
   },
   rollButton: {
     backgroundColor: '#B22222',
@@ -247,11 +269,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     alignSelf: 'center',
     marginTop: 20,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   rollText: {
     color: 'white',
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
+  },
+  diceRow: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginVertical: 20,
+  },
+
+  icon: {
+    width: 20,
+    height: 20,
+    marginRight: 8,
+  },
+  dice: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 5,
   },
 });

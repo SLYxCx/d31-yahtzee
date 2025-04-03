@@ -3,20 +3,9 @@ import { useRouter, Link } from 'expo-router';
 import { Image } from "expo-image";
 
 export default function Page() {
-
-
   const router = useRouter();
 
-  // PLAY BUTTON
-  const play = () => {
-    //console.log("PLAY");
-    //router.push("/(play)"); // Disabled for Modal Testing
-
-    <Link href="/modal"></Link>
-  }
-  // OPTIONS BUTTON
   const options = () => {
-    //console.log("OPTIONS");
     router.push("/options");
   }
 
@@ -29,29 +18,42 @@ export default function Page() {
           style={styles.image}
           source={require('../assets/d31logo.png')}
           contentFit="contain"
-          contentPosition={"center"}
+          contentPosition="center"
         />
 
         {/* BUTTONS */}
         <View style={styles.buttonArea}>
 
           {/* PLAY Button */}
-          <Link href="/modal"
-            style={styles.button}
-            //onPress={play}
-            >
-              <View>
-                <Text>PLAY</Text> 
+          <Link href="/modal" asChild>
+            <TouchableOpacity style={styles.button}>
+              <View style={styles.buttonInner}>
+                <Image
+                  source={require('../assets/dice-icon.png')}
+                  style={styles.dice}
+                />
+                <Text style={styles.buttonText}>PLAY</Text>
+                <Image
+                  source={require('../assets/dice-icon.png')}
+                  style={styles.dice}
+                />
               </View>
+            </TouchableOpacity>
           </Link>
 
           {/* OPTIONS Button */}
-          <TouchableOpacity 
-            style={styles.button}
-            onPress={options}>
-              <View>
-                <Text>OPTIONS</Text>
-              </View>
+          <TouchableOpacity style={styles.button} onPress={options}>
+            <View style={styles.buttonInner}>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+              <Text style={styles.buttonText}>OPTIONS</Text>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+            </View>
           </TouchableOpacity>
 
         </View>
@@ -65,31 +67,45 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 20,
-    backgroundColor: "#922018"
+    backgroundColor: "#922018",
   },
   main: {
     flex: 1,
-    //justifyContent: "center",
     paddingTop: "20%",
-    //maxWidth: 960,
-    //marginHorizontal: "auto",
   },
   image: {
     flex: 1,
     maxHeight: '35%',
-    minWidth: '100%'
+    minWidth: '100%',
   },
-
-  buttonArea:{
-    //backgroundColor: 'blue',
+  buttonArea: {
     marginTop: '30%',
+    alignItems: 'center',
+    gap: 30,
   },
   button: {
-    backgroundColor: "grey",
-    marginVertical: "10%",
-    marginHorizontal: "auto",
-    minWidth: "70%",
-    minHeight: '10%',
-    borderRadius: 5
+    backgroundColor: "#C7361F",
+    borderRadius: 30,
+    borderWidth: 4,
+    borderColor: "#FDC500",
+    paddingVertical: 10,
+    width: 350,
+    height: 100,
+    justifyContent: "center",
+  },
+  buttonInner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  dice: {
+    width: 24,
+    height: 24,
+    marginHorizontal: 5,
+  },
+  buttonText: {
+    fontFamily: "SawarabiMincho",
+    color: "#000",
+    fontSize: 36,
   },
 });
