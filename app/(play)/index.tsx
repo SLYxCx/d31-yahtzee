@@ -13,7 +13,7 @@ export default function StartScreen() {
   const comGame = () => {
     //router.push("/difficulty");
     // selecting computer brings you to the results page for testing
-    router.push("./results");
+    router.push("./results/?props=1404");
   }
 
   const backHome = () => {

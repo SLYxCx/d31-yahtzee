@@ -2,8 +2,10 @@ import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { useState } from "react";
+import { useLocalSearchParams } from 'expo-router';
 
 export default function Page() {
+  const { props } = useLocalSearchParams();
 
   const router = useRouter();
 
@@ -25,12 +27,13 @@ export default function Page() {
     "YOU LOST"
   ];
 
+
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>{winPhrases[winState]}</Text>
+      <Text style={styles.title}>{winPhrases[parseInt(props[0])]}</Text>
       <Text style={styles.scoreText}>SCORE:</Text>
-      <Text style={styles.scoreText}>{testScore}</Text>
+      <Text style={styles.scoreText}>{props[1]}{props[2]}{props[3]}</Text>
 
       {/* BUTTONS */}
       <View style={styles.buttonArea}>
