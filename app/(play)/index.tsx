@@ -44,8 +44,6 @@ export default function StartScreen() {
           </View>
         </TouchableOpacity>
 
-      </View>
-
       {/* BACK Button */}
       <TouchableOpacity style={[styles.button, styles.red]} onPress={backHome}>
         <View style={styles.buttonInner}>
@@ -54,6 +52,8 @@ export default function StartScreen() {
           <Dice />
         </View>
       </TouchableOpacity>
+
+      </View>
 
     </View>
   );
@@ -82,6 +82,7 @@ const styles = StyleSheet.create({
     lineHeight: 52,
   },
   buttonArea: {
+    flex: 1,
     marginTop: '20%',
     alignItems: 'center',
     gap: 20,
