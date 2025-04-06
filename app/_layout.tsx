@@ -2,6 +2,7 @@ import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { SplashScreen } from "expo-router";
 import { useEffect } from "react";
+import { GlobalProvider } from '../constants/GlobalContext'; // Import the typed hook
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -18,14 +19,16 @@ export default function RootLayout() {
   }
 
   return (
-    <Stack
-      screenOptions={{
-        headerShown: false,
-      }}>
-      <Stack.Screen name="index" />
-      <Stack.Screen name="modal" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
-      <Stack.Screen name="(play)" />
-      <Stack.Screen name="options" />
-    </Stack>
+    <GlobalProvider>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+        }}>
+        <Stack.Screen name="index" />
+        <Stack.Screen name="modal" options={{ presentation: 'modal', animation: 'slide_from_bottom' }} />
+        <Stack.Screen name="(play)" />
+        <Stack.Screen name="options" />
+      </Stack>
+    </GlobalProvider>
   );
 }
