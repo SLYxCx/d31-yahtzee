@@ -1,47 +1,45 @@
 import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
+import { useState } from "react";
 
-export default function StartScreen() {
+export default function Page() {
 
   const router = useRouter();
 
-  const playerGame = () => {
-    router.push("/(game)");
-  }
-
-  const comGame = () => {
-    //router.push("/difficulty");
-    // selecting computer brings you to the results page for testing
-    router.push("./results");
+  const playAgain = () => {
+    router.push("./index");
   }
 
   const backHome = () => {
     router.dismissAll();
   }
 
+  const [winState,setWinState] = useState(0);
+  const [testScore,setTestScore] = useState(303);
+
+  const winPhrases: string[] = [
+    "PLAYER 1 WINS!",
+    "PLAYER 2 WINS!",
+    "YOU WIN!",
+    "YOU LOST"
+  ];
+
   return (
     <View style={styles.container}>
 
-      <Text style={styles.title}>SELECT{"\n"}OPPONENT</Text>
+      <Text style={styles.title}>{winPhrases[winState]}</Text>
+      <Text style={styles.scoreText}>SCORE:</Text>
+      <Text style={styles.scoreText}>{testScore}</Text>
 
       {/* BUTTONS */}
       <View style={styles.buttonArea}>
 
         {/* PLAYER Button */}
-        <TouchableOpacity style={[styles.button, styles.green]} onPress={playerGame}>
+        <TouchableOpacity style={[styles.button, styles.green]} onPress={playAgain}>
           <View style={styles.buttonInner}>
             <Dice />
-            <Text style={styles.buttonText}>PLAYER</Text>
-            <Dice />
-          </View>
-        </TouchableOpacity>
-
-        {/* COMPUTER Button */}
-        <TouchableOpacity style={[styles.button, styles.yellow]} onPress={comGame}>
-          <View style={styles.buttonInner}>
-            <Dice />
-            <Text style={styles.buttonText}>COMPUTER</Text>
+            <Text style={styles.buttonText}>PLAY AGAIN</Text>
             <Dice />
           </View>
         </TouchableOpacity>
@@ -77,15 +75,24 @@ const styles = StyleSheet.create({
   },
   title: {
     paddingTop: '20%',
+    margin: 10,
     color: 'white',
     fontSize: 60,
     textAlign: 'center',
     fontFamily: 'SawarabiMincho',
     lineHeight: 52,
   },
+  scoreText: {
+    color: 'white',
+    fontSize: 30,
+    textAlign: 'center',
+    fontFamily: 'SawarabiMincho',
+    lineHeight: 35,
+  },
   buttonArea: {
     flex: 1,
-    marginTop: '20%',
+    marginBottom: '20%',
+    justifyContent: 'flex-end',
     alignItems: 'center',
     gap: 20,
   },
