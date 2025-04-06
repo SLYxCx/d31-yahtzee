@@ -5,6 +5,10 @@ import { Image } from "expo-image";
 export default function Page() {
   const router = useRouter();
 
+  const play = () => {
+    router.push("/(play)");
+  }
+
   const options = () => {
     router.push("/options");
   }
@@ -25,21 +29,19 @@ export default function Page() {
         <View style={styles.buttonArea}>
 
           {/* PLAY Button */}
-          <Link href="/modal" asChild>
-            <TouchableOpacity style={styles.button}>
-              <View style={styles.buttonInner}>
-                <Image
-                  source={require('../assets/dice-icon.png')}
-                  style={styles.dice}
-                />
-                <Text style={styles.buttonText}>PLAY</Text>
-                <Image
-                  source={require('../assets/dice-icon.png')}
-                  style={styles.dice}
-                />
-              </View>
-            </TouchableOpacity>
-          </Link>
+          <TouchableOpacity style={styles.button} onPress={play}>
+            <View style={styles.buttonInner}>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+              <Text style={styles.buttonText}>PLAY</Text>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+            </View>
+          </TouchableOpacity>
 
           {/* OPTIONS Button */}
           <TouchableOpacity style={styles.button} onPress={options}>
