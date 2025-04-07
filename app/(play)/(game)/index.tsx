@@ -13,11 +13,23 @@ import {
   calculateTotalScore,
 } from '../../../logic/gameEngine';
 import { useRouter } from 'expo-router';
+import { Audio } from 'expo-av';
+import { useGlobalContext } from '../../../constants/GlobalContext';
 
 const ALL_CATEGORIES = [...UpperCategories, ...LowerCategories];
 const MAX_TURNS = ALL_CATEGORIES.length * 2; // two players
 
 export default function GameScreen() {
+
+
+  const { sfxVolume } = useGlobalContext();
+
+  async function playRollAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../../../assets/audio/rolling-dice.mp3'));
+    await sound.setVolumeAsync(sfxVolume);
+    await sound.playAsync();
+    //await sound.unloadAsync();  
+  }
 
   const router = useRouter();
 
@@ -37,6 +49,7 @@ export default function GameScreen() {
 
   const handleRoll = () => {
     if (rollState.rollsLeft > 0) {
+      playRollAudio();
       const newDice = rollDice(rollState.dice);
       setRollState({
         dice: newDice,

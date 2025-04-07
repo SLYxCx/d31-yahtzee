@@ -8,6 +8,8 @@ interface GlobalState {
   anim: boolean;
   setAnim: (animationEnabled: boolean) => void;
   toggleAnim: () => void;
+  musicVolume: number;
+  setMusicVolume: (volume: number) => void;
 }
 
 // Create the context with the defined type
@@ -30,6 +32,7 @@ interface GlobalProviderProps {
 // Create the provider component
 export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   const [sfxVolume, setsfxVolume] = useState<number>(1);
+  const [musicVolume, setMusicVolume] = useState<number>(1);
   const [anim, setAnim] = useState<boolean>(true);
 
   const toggleAnim = () => {
@@ -37,7 +40,7 @@ export const GlobalProvider: React.FC<GlobalProviderProps> = ({ children }) => {
   };
 
   return (
-    <GlobalContext.Provider value={{ sfxVolume, setsfxVolume, anim, setAnim, toggleAnim }}>
+    <GlobalContext.Provider value={{ sfxVolume, setsfxVolume, anim, setAnim, toggleAnim, musicVolume,  setMusicVolume}}>
       {children}
     </GlobalContext.Provider>
   );

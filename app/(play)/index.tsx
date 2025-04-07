@@ -1,22 +1,38 @@
 import { useRouter } from 'expo-router';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
+import { Audio } from 'expo-av';
+import { useGlobalContext } from '../../constants/GlobalContext';
 
 export default function StartScreen() {
+
+  const { sfxVolume } = useGlobalContext();
+
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../../assets/audio/menu_Blip.mp3'));
+    await sound.setVolumeAsync(sfxVolume);
+    await sound.playAsync();
+    //await sound.unloadAsync();  
+  }
+
+
 
   const router = useRouter();
 
   const playerGame = () => {
+    playAudio();
     router.push("/(game)");
   }
 
   const comGame = () => {
+    playAudio();
     router.push("/(game)");
     // selecting computer brings you to the results page for testing
     //router.push("./results/?props=1404");
   }
 
   const backHome = () => {
+    playAudio();
     router.dismissAll();
   }
 
@@ -78,7 +94,7 @@ const styles = StyleSheet.create({
   title: {
     paddingTop: '20%',
     color: 'white',
-    fontSize: 60,
+    fontSize: 55,
     textAlign: 'center',
     fontFamily: 'SawarabiMincho',
     lineHeight: 52,

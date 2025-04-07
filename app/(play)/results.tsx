@@ -3,17 +3,32 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Image } from 'expo-image';
 import { useState } from "react";
 import { useLocalSearchParams } from 'expo-router';
+import { Audio } from 'expo-av';
+import { useGlobalContext } from '../../constants/GlobalContext';
 
 export default function Page() {
   const { props } = useLocalSearchParams();
 
+  const { sfxVolume } = useGlobalContext();
+
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../../assets/audio/menu_Blip.mp3'));
+    await sound.setVolumeAsync(sfxVolume);
+    await sound.playAsync();
+    //await sound.unloadAsync();  
+  }
+
+
+
   const router = useRouter();
 
   const playAgain = () => {
+    playAudio();
     router.dismissAll();
   }
 
   const backHome = () => {
+    playAudio();
     router.dismissAll();
     //router.push("/");
   }

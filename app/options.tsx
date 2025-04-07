@@ -6,15 +6,28 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Slider from '@react-native-community/slider';
 import { useGlobalContext } from '../constants/GlobalContext'; // Import the typed hook
+import { Audio } from 'expo-av';
 
 export default function Page() {
   const router = useRouter();
 
   const back = () => {
+    playAudio();
     router.back();
   }
 
-  const { sfxVolume, setsfxVolume, anim, toggleAnim } = useGlobalContext(); // Use the typed hook
+  const { sfxVolume, setsfxVolume, anim, toggleAnim, musicVolume,  setMusicVolume } = useGlobalContext(); // Use the typed hook
+
+
+  
+
+  async function playAudio() {
+    const { sound } = await Audio.Sound.createAsync(require('../assets/audio/menu_Blip.mp3'));
+    await sound.setVolumeAsync(sfxVolume);
+    await sound.playAsync();
+    //await sound.unloadAsync();  
+  }
+
 
 
   // THIS WAS MOVED TO /constants/GlobalContext.tsx!
@@ -67,6 +80,35 @@ export default function Page() {
                 thumbTintColor="#f4f3f4"
                 value={sfxVolume}
                 onValueChange={(value) => setsfxVolume(Number(value.toFixed(2)))}
+                />
+            </View>
+
+            {/* Music Label */}
+          <View style={styles.button}>
+            <View style={styles.buttonInner}>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+              <Text style={styles.buttonText}>Music</Text>
+              <Image
+                source={require('../assets/dice-icon.png')}
+                style={styles.dice}
+              />
+            </View>
+          </View>
+
+          {/* Music Slider */}
+            <View>
+                <Slider
+                style={styles.slider}
+                minimumValue={0}
+                maximumValue={1}
+                minimumTrackTintColor="#C7361F"
+                maximumTrackTintColor="#000000"
+                thumbTintColor="#f4f3f4"
+                value={musicVolume}
+                onValueChange={(value) => setMusicVolume(Number(value.toFixed(2)))}
                 />
             </View>
 
