@@ -10,11 +10,12 @@ export default function Page() {
   const router = useRouter();
 
   const playAgain = () => {
-    router.push("./index");
+    router.dismissAll();
   }
 
   const backHome = () => {
     router.dismissAll();
+    //router.push("/");
   }
 
   const [winState,setWinState] = useState(0);
@@ -24,7 +25,8 @@ export default function Page() {
     "PLAYER 1 WINS!",
     "PLAYER 2 WINS!",
     "YOU WIN!",
-    "YOU LOST"
+    "YOU LOST",
+    "TIE!"
   ];
 
 

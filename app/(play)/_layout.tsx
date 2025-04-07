@@ -10,7 +10,6 @@ export default function PlayLayout() {
                 }}>
             <Stack.Screen name="index" />
             <Stack.Screen name="(game)" />
-            <Stack.Screen name="difficulty" />
             <Stack.Screen name="(computer)" />
 
         </Stack>

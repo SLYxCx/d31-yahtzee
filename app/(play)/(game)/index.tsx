@@ -12,11 +12,15 @@ import {
   ScoreCard as ScoreType,
   calculateTotalScore,
 } from '../../../logic/gameEngine';
+import { useRouter } from 'expo-router';
 
 const ALL_CATEGORIES = [...UpperCategories, ...LowerCategories];
 const MAX_TURNS = ALL_CATEGORIES.length * 2; // two players
 
 export default function GameScreen() {
+
+  const router = useRouter();
+
   const [rollState, setRollState] = useState(resetRoll());
   const [scoresP1, setScoresP1] = useState<ScoreType>({});
   const [scoresP2, setScoresP2] = useState<ScoreType>({});
@@ -60,10 +64,17 @@ export default function GameScreen() {
       const totalP1 = calculateTotalScore(scoresP1, 0);
       const totalP2 = calculateTotalScore(scoresP2, 0);
       let message = `Player 1: ${totalP1} vs Player 2: ${totalP2}\n`;
-      if (totalP1 > totalP2) message += '🎉 Player 1 wins!';
-      else if (totalP2 > totalP1) message += '🎉 Player 2 wins!';
-      else message += "It's a tie!";
-      Alert.alert('Game Over', message);
+
+      //if (totalP1 > totalP2) message += '🎉 Player 1 wins!';
+      //else if (totalP2 > totalP1) message += '🎉 Player 2 wins!';
+      //else message += "It's a tie!";
+
+      let resultsString = ""
+      if (totalP1 > totalP2) resultsString += '0' + totalP1;
+      else if (totalP2 > totalP1) resultsString += '1' + totalP2;
+      else resultsString += '4';
+      //Alert.alert('Game Over', resultsString);
+      router.push("./results/?props="+resultsString);
     }
 
     setIsPlayer1(!isPlayer1);
