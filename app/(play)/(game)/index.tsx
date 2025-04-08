@@ -1,6 +1,6 @@
 // Full StyledGameUI for GameScreen with Working Example Logic and How to Play
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, ScrollView, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Alert, ScrollView, Image, ImageSourcePropType } from 'react-native';
 import Dice from '../../../components/Dice';
 import { Category, UpperCategories, LowerCategories } from '../../../constants/categories';
 import {
@@ -16,6 +16,7 @@ import { useRouter } from 'expo-router';
 import { Audio } from 'expo-av';
 import { useGlobalContext } from '../../../constants/GlobalContext';
 
+
 const ALL_CATEGORIES = [...UpperCategories, ...LowerCategories];
 const MAX_TURNS = ALL_CATEGORIES.length * 2; // two players
 
@@ -23,13 +24,46 @@ export default function GameScreen() {
 
 
   const { sfxVolume } = useGlobalContext();
+  
 
   async function playRollAudio() {
     const { sound } = await Audio.Sound.createAsync(require('../../../assets/audio/rolling-dice.mp3'));
     await sound.setVolumeAsync(sfxVolume);
     await sound.playAsync();
     //await sound.unloadAsync();  
+    setTimeout(async () => {
+      await sound.unloadAsync();
+    }, 1000);
   }
+
+  async function playSelectAudio() {
+    const { sound: blip } = await Audio.Sound.createAsync(require('../../../assets/audio/menu_blip_2.wav'));
+    await blip.setVolumeAsync(sfxVolume);
+    await blip.playAsync();
+    //await blip.unloadAsync();
+    setTimeout(async () => {
+      await blip.unloadAsync();
+    }, 500);
+  }
+
+  async function playHoldAudio() {
+    const { sound: hold } = await Audio.Sound.createAsync(require('../../../assets/audio/dice-hold2.wav'));
+    await hold.setVolumeAsync(sfxVolume);
+    await hold.playAsync();
+    //await hold.unloadAsync();
+    setTimeout(async () => {
+      await hold.unloadAsync();
+    }, 500);
+  }
+
+  const diceIconArray: ImageSourcePropType[] = [
+    require("../../../assets/d1-dice-icon.png"),
+    require("../../../assets/d2-dice-icon.png"),
+    require("../../../assets/d3-dice-icon.png"),
+    require("../../../assets/d4-dice-icon.png"),
+    require("../../../assets/dice-icon.png"),
+    require("../../../assets/d6-dice-icon.png")
+  ];
 
   const router = useRouter();
 
@@ -59,6 +93,7 @@ export default function GameScreen() {
   };
 
   const handleToggleDie = (index: number) => {
+    playHoldAudio();
     const newDice = toggleLock(rollState.dice, index);
     setRollState({ ...rollState, dice: newDice });
   };
@@ -66,6 +101,7 @@ export default function GameScreen() {
   const handleSelectCategory = (category: Category) => {
     if (currentUsed.has(category)) return;
 
+    playSelectAudio();
     const newScore = calculateScore(category, rollState.dice.map(d => d.value));
     setCurrentScores(prev => ({ ...prev, [category]: newScore }));
     setCurrentUsed(prev => new Set([...prev, category]));
@@ -118,18 +154,18 @@ export default function GameScreen() {
         <Text style={styles.scoreBox}>P1: {calculateTotalScore(scoresP1, 0)}</Text>
         <Text style={styles.scoreBox}>P2: {calculateTotalScore(scoresP2, 0)}</Text>
       </View>
-      <Text style={styles.turnIndicator}>Turn: Player {isPlayer1 ? '1' : '2'}</Text>
+      <Text style={isPlayer1 ? styles.turnIndicator : styles.turnIndicator2}>Turn: Player {isPlayer1 ? '1' : '2'}</Text>
 
       <View style={styles.scoreCard}>
   <View style={styles.column}>
     <Text style={styles.title}>MINOR</Text>
-    {UpperCategories.map((cat) => (
+    {UpperCategories.map((cat,index) => (
       <TouchableOpacity
         key={cat}
         style={[styles.category, currentUsed.has(cat) && styles.used]}
         onPress={() => handleSelectCategory(cat)}>
         <View style={styles.row}>
-          <Image source={require('../../../assets/dice-icon.png')} style={styles.icon} />
+          <Image source={diceIconArray[index]} style={styles.icon} />
           <Text style={styles.label}>{cat}</Text>
         </View>
       </TouchableOpacity>
@@ -167,7 +203,7 @@ export default function GameScreen() {
                         source={require('../../../assets/dice-icon.png')}
                         style={styles.dice}
                       />
-        <Text style={styles.rollText}>ROLL</Text>
+        <Text style={styles.rollText}>ROLLS: {rollState.rollsLeft}</Text>
         <Image
                         source={require('../../../assets/dice-icon.png')}
                         style={styles.dice}
@@ -236,7 +272,27 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 18,
     textAlign: 'center',
+    alignSelf: 'center',
     marginVertical: 5,
+    width: '50%',
+    backgroundColor: 'darkgreen',
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: 'white',
+    marginTop: 20,
+  },
+  turnIndicator2: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+    alignSelf: 'center',
+    marginVertical: 5,
+    width: '50%',
+    backgroundColor: 'darkblue',
+    borderRadius: 30,
+    borderWidth: 3,
+    borderColor: 'white',
+    marginTop: 20,
   },
   scoreCard: {
     flexDirection: 'row',

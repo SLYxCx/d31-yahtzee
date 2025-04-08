@@ -14,10 +14,13 @@ export default function Page() {
   const [backgroundMusic, setBackgroundMusic] = useState<Audio.Sound | null>(null);
 
   async function playAudio() {
-    const { sound } = await Audio.Sound.createAsync(require('../assets/audio/menu_Blip.mp3'));
+    const { sound } = await Audio.Sound.createAsync(require('../assets/audio/menu_blip_2.wav'));
     await sound.setVolumeAsync(sfxVolume);
     await sound.playAsync();
-    //await sound.unloadAsync();  
+    //await sound.unloadAsync(); 
+    setTimeout(async () => {
+      await sound.unloadAsync();
+    }, 500);
   }
 
   async function playMusicTest() {
