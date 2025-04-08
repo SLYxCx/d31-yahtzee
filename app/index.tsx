@@ -53,11 +53,20 @@ export default function Page() {
 
   const options = () => {
     playAudio();
-    playMusicTest()
+    //playMusicTest()
     router.push("/options");
   }
 
+  useEffect(() => {
+    playMusicTest(); // Call playMusicTest when the component mounts
 
+    // Optional: Unload the music when the component unmounts
+    return () => {
+      if (backgroundMusic) {
+        backgroundMusic.unloadAsync();
+      }
+    };
+  }, []); // Empty dependency array means this effect runs only once
   
   return (
     <View style={styles.container}>
